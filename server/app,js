@@ -1,17 +1,22 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = 3000; 
 
-// Middleware to parse JSON requests
-app.use(express.json());
+// Middleware setup
+app.use(express.json()); // Parse JSON requests
+app.use(express.urlencoded({ extended: true })); // Parse URL-encoded requests
 
-// Basic route
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
 
-// Start the server
+app.post('/api/draw', (req, res) => {
+    // Handle drawing functionality here
+    // Example: save drawing data to a database or process the drawing request
+    res.send('Drawing endpoint reached');
+  });
+  
+  // Add more routes.
+  
+
+// Start server
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`Server is running on http://localhost:${port}`);
 });
-
