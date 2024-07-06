@@ -1,17 +1,24 @@
+// app.js
 const express = require('express');
+const connectDB = require('./config/db');
+const indexRoutes = require('./routes/index');
+const userRoutes = require('./routes/userRoutes');
+
 const app = express();
 const port = 3000;
 
-// Middleware to parse JSON requests
-app.use(express.json());
+// Middleware setup
+app.use(express.json()); // Parse JSON requests
+app.use(express.urlencoded({ extended: true })); // Parse URL-encoded requests
 
-// Basic route
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
+// Connect to MongoDB
+connectDB();
 
-// Start the server
+// Routes
+app.use('/', indexRoutes);
+app.use('/api/users', userRoutes);
+
+// Start server
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`Server is running on http://localhost:${port}`);
 });
-
