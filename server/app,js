@@ -1,20 +1,22 @@
+// app.js
 const express = require('express');
+const connectDB = require('./config/db');
+const indexRoutes = require('./routes/index');
+const userRoutes = require('./routes/userRoutes');
+
 const app = express();
-const port = 3000; 
+const port = 3000;
 
 // Middleware setup
 app.use(express.json()); // Parse JSON requests
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded requests
 
+// Connect to MongoDB
+connectDB();
 
-app.post('/api/draw', (req, res) => {
-    // Handle drawing functionality here
-    // Example: save drawing data to a database or process the drawing request
-    res.send('Drawing endpoint reached');
-  });
-  
-  // Add more routes.
-  
+// Routes
+app.use('/', indexRoutes);
+app.use('/api/users', userRoutes);
 
 // Start server
 app.listen(port, () => {
