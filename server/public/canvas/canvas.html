@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collaborative Drawing Platform - Canvas</title>
+    <link rel="stylesheet" href="/canvas/style2.css">
+</head>
+<body>
+    <h1 align="center">Draw What You Feel</h1>
+
+    <div class="canvas-container">
+        <canvas id="drawingCanvas" width="800" height="600"></canvas>
+    </div>
+    <script src="/socket.io/socket.io.js"></script> <!-- Include Socket.io client library -->
+    <script>
+        const socket = io(); // Connect to the server's Socket.io instance
+
+        socket.on('connect', () => {
+            console.log('Connected to server socket');
+
+            socket.on('sessionId', (sessionId) => {
+                console.log('Received session ID:', sessionId);
+                // You can use the session ID as needed on the client side
+                // For example, store it in local storage or session storage
+            });
+
+            // Handle any additional socket events or functionality here
+        });
+
+        // Example of handling drawing events (to be implemented)
+        const canvas = document.getElementById('drawingCanvas');
+        // Add drawing event listeners and functionality here
+    </script>
+</body>
+</html>
