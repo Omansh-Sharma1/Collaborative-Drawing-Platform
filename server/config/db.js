@@ -5,7 +5,7 @@ const connectDB = async () => {
     const conn = await mongoose.connect('mongodb://localhost:27017/collab_drawing_platform', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useCreateIndex: true
+     
     });
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (err) {
