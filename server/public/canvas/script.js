@@ -105,7 +105,7 @@ window.onload = function() {
 
         switch (penStyleSelect.value) {
             case 'dashed':
-                ctx.setLineDash([10, 30]);
+                ctx.setLineDash([20, 40]);
                 break;
             case 'dotted':
                 ctx.setLineDash([2, 25]); 
