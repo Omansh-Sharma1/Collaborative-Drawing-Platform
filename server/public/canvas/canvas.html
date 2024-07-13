@@ -3,15 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Collaborative Drawing Platform - Canvas</title>
-    <link rel="stylesheet" href="/canvas/style2.css">
+    <title>Drawing Canvas</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/canvas/style.css">
 </head>
 <body>
-    <h1 align="center">Draw What You Feel</h1>
-
-    <div class="canvas-container">
-        <canvas id="drawingCanvas" width="800" height="600"></canvas>
+    <div class="container">
+        <div class="side-palette">
+            <h2 class="text-white">Tools</h2>
+            <div class="palette-control">
+                <label for="penStyle" class="text-white">Pen Style</label>
+                <select class="form-control" id="penStyle">
+                    <option value="solid">Solid</option>
+                    <option value="dashed">Dashed</option>
+                    <option value="dotted">Dotted</option>
+                </select>
+            </div>
+            <div class="palette-control">
+                <label for="brushStyle" class="text-white">Brush Style</label>
+                <select class="form-control" id="brushStyle">
+                    <option value="pen">Pen</option>
+                    <option value="highlighter">Highlighter</option>
+                    <option value="spray">Spray</option>
+                    <option value="shiny">Shiny</option>
+                </select>
+            </div>
+            <div class="palette-control">
+                <label for="color" class="text-white">Color</label>
+                <input type="color" class="form-control" id="color" value="#000000">
+            </div>
+            <div class="palette-control">
+                <label for="thickness" class="text-white">Thickness</label>
+                <input type="range" class="form-control-range" id="thickness" min="1" max="10">
+            </div>
+            <div class="palette-control">
+                <label for="opacity" class="text-white">Opacity</label>
+                <input type="range" class="form-control-range" id="opacity" min="0.1" max="1" step="0.1">
+            </div>
+            <button class="palette-button" id="eraserButton">Eraser</button>
+            <button class="palette-button" id="clearButton">Clear Canvas</button>
+        </div>
+        <div class="main-content">
+            <canvas id="canvas" class="border"></canvas>
+        </div>
     </div>
+    <div class="marquee-container">
+        <div class="marquee">
+            <p>Welcome to Collaborative Drawing Platform</p>
+        </div>
+    </div>
+    <script src="/canvas/script.js"></script>
     <script src="/socket.io/socket.io.js"></script> <!-- Include Socket.io client library -->
     <script>
         const socket = io(); // Connect to the server's Socket.io instance
