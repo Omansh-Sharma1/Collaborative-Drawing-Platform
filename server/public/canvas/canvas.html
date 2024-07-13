@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Drawing Canvas</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="/canvas/style.css">
 </head>
 <body>
@@ -54,9 +53,9 @@
         </div>
     </div>
     <script src="/canvas/script.js"></script>
-    <script src="/socket.io/socket.io.js"></script> <!-- Include Socket.io client library -->
+    <script src="/socket.io/socket.io.js"></script>
     <script>
-        const socket = io(); // Connect to the server's Socket.io instance
+        const socket = io(); 
 
         socket.on('connect', () => {
             console.log('Connected to server socket');
@@ -64,15 +63,11 @@
             socket.on('sessionId', (sessionId) => {
                 console.log('Received session ID:', sessionId);
                 // You can use the session ID as needed on the client side
-                // For example, store it in local storage or session storage
             });
 
             // Handle any additional socket events or functionality here
         });
-
-        // Example of handling drawing events (to be implemented)
         const canvas = document.getElementById('drawingCanvas');
-        // Add drawing event listeners and functionality here
     </script>
 </body>
 </html>

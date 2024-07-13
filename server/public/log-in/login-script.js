@@ -4,8 +4,8 @@ sessionForm.addEventListener('submit', async (e) => {
   e.preventDefault();
 
   const formData = new FormData(sessionForm);
-  const userName = formData.get('userName'); // Adjust this according to your form input name
-
+  const userName = formData.get('userName');
+  
   try {
     const response = await fetch('/login', {
       method: 'POST',
@@ -23,6 +23,5 @@ sessionForm.addEventListener('submit', async (e) => {
     window.location.href = '/canvas';
   } catch (error) {
     console.error('Error logging in:', error.message);
-    // Handle error as needed (e.g., display error message)
   }
 });

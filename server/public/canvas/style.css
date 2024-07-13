@@ -105,7 +105,7 @@ body, html {
     display: inline-block;
     white-space: nowrap;
     animation: marquee-scroll 5s linear infinite;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Light glow effect */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 .marquee p {

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 
-// GET user profile by ID
+//NOT INTEGRATED YET
 router.get('/:id/profile', async (req, res) => {
   const { id } = req.params;
   try {

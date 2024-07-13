@@ -6,17 +6,15 @@ const { initializeSocket } = require('./services/socket.js');
 const app = express();
 const port = process.env.PORT || 3000;
 
-const server = http.createServer(app); // Create HTTP server instance
+const server = http.createServer(app);
 
 // Middleware setup
-app.use(express.json()); // Parse JSON requests
-app.use(express.urlencoded({ extended: true })); // Parse URL-encoded requests
-app.use(express.static(path.join(__dirname, 'public'))); // Serve static files from 'public' directory
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Initialize socket.io passing the HTTP server instance
 initializeSocket(server);
 
-// Routes (example routes, adjust as per your application)
 app.use('/', require('./routes/index'));
 app.use('/api/users', require('./routes/userRoutes'));
 

@@ -31,22 +31,22 @@ window.onload = function() {
 
     function endPosition() {
         painting = false;
-        ctx.beginPath(); // Reset the current path so it doesn't connect lines
+        ctx.beginPath(); 
     }
 
     function draw(e) {
         if (!painting) return;
 
-        ctx.lineWidth = thicknessInput.value; // Set the width of the brush
-        ctx.lineCap = 'round'; // Set the end of the lines to be rounded
-        ctx.strokeStyle = colorInput.value; // Set the brush color
-        ctx.globalAlpha = opacityInput.value; // Set the opacity of the brush
+        ctx.lineWidth = thicknessInput.value; 
+        ctx.lineCap = 'round'; 
+        ctx.strokeStyle = colorInput.value; 
+        ctx.globalAlpha = opacityInput.value; 
 
         if (erasing) {
-            ctx.globalCompositeOperation = 'destination-out'; // Eraser mode
-            ctx.strokeStyle = 'rgba(255,255,255,1)'; // White color for eraser
+            ctx.globalCompositeOperation = 'destination-out'; 
+            ctx.strokeStyle = 'rgba(255,255,255,1)'; 
         } else {
-            ctx.globalCompositeOperation = 'source-over'; // Normal drawing mode
+            ctx.globalCompositeOperation = 'source-over';
             ctx.strokeStyle = colorInput.value;
         }
 
@@ -105,18 +105,17 @@ window.onload = function() {
 
         switch (penStyleSelect.value) {
             case 'dashed':
-                ctx.setLineDash([10, 10]); // Dash length 10px, gap length 10px
+                ctx.setLineDash([10, 30]);
                 break;
             case 'dotted':
-                ctx.setLineDash([2, 10]); // Dot length 2px, gap length 10px
+                ctx.setLineDash([2, 25]); 
                 break;
             case 'solid':
             default:
-                ctx.setLineDash([]); // Solid line
+                ctx.setLineDash([]);
                 break;
         }
 
-        // Store the drawing action in history
         history.push({ type: 'draw', x: pos.x, y: pos.y });
     }
 
@@ -130,16 +129,14 @@ window.onload = function() {
         history = [];
     }
 
-    // Event listeners for mouse actions
     canvas.addEventListener('mousedown', startPosition);
     canvas.addEventListener('mouseup', endPosition);
     canvas.addEventListener('mousemove', draw);
     eraserButton.addEventListener('click', toggleEraser);
     clearButton.addEventListener('click', clearCanvas);
 
-    // Function to redraw the canvas based on history
     function redrawCanvas() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height); 
 
         for (let action of history) {
             if (action.type === 'draw') {
@@ -151,9 +148,7 @@ window.onload = function() {
         }
     }
 
-    // Event listener for clear button
     clearButton.addEventListener('click', function() {
-        // Clear the canvas and reset history
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         history = [];
     });
