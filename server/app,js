@@ -1,17 +1,26 @@
 const express = require('express');
+const http = require('http'); // Import HTTP module
+const path = require('path');
+const { initializeSocket } = require('./services/socket.js');
+
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
-// Middleware to parse JSON requests
-app.use(express.json());
+const server = http.createServer(app); // Create HTTP server instance
 
-// Basic route
-app.get('/', (req, res) => {
-    res.send('Hello World!');
+// Middleware setup
+app.use(express.json()); // Parse JSON requests
+app.use(express.urlencoded({ extended: true })); // Parse URL-encoded requests
+app.use(express.static(path.join(__dirname, 'public'))); // Serve static files from 'public' directory
+
+// Initialize socket.io passing the HTTP server instance
+initializeSocket(server);
+
+// Routes (example routes, adjust as per your application)
+app.use('/', require('./routes/index'));
+app.use('/api/users', require('./routes/userRoutes'));
+
+// Start server
+server.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
 });
-
-// Start the server
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
-});
-
