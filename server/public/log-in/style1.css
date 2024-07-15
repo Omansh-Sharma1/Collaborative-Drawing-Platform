@@ -4,9 +4,9 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    flex-direction: column; /* Align items in a column */
-    justify-content: center; /* Center vertically */
-    align-items: center; /* Center horizontally */
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
     height: 100vh;
 }
 
