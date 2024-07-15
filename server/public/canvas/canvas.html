@@ -54,20 +54,7 @@
     </div>
     <script src="/canvas/script.js"></script>
     <script src="/socket.io/socket.io.js"></script>
-    <script>
-        const socket = io(); 
+    
 
-        socket.on('connect', () => {
-            console.log('Connected to server socket');
-
-            socket.on('sessionId', (sessionId) => {
-                console.log('Received session ID:', sessionId);
-                // You can use the session ID as needed on the client side
-            });
-
-            // Handle any additional socket events or functionality here
-        });
-        const canvas = document.getElementById('drawingCanvas');
-    </script>
 </body>
 </html>
