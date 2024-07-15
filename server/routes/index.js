@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const path = require('path'); // Import the path module
+const path = require('path');
 
 // Route to serve the login form
 router.get('/', (req, res) => {
@@ -12,8 +12,7 @@ router.post('/login', (req, res) => {
   const { userName } = req.body;
   console.log(`User logged in with name: ${userName}`);
 
-  // Perform any validation or authentication here
-  // For simplicity, assume login is successful and redirect to canvas.html
+  //AUTH FEATURES ARE NOT YET INTEGRATED.
   res.redirect('/canvas');
 });
 

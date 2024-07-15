@@ -16,10 +16,28 @@ const initializeSocket = (server) => {
       console.log(`User with session ID ${sessionId} disconnected`);
     });
 
-    // Handle drawing event (example)
+    // Handle drawing event
     socket.on('drawing', (data) => {
       // Broadcast drawing data to all connected clients except sender
       socket.broadcast.emit('drawing', data);
+    });
+
+    // Handle clear canvas event
+    socket.on('clearCanvas', () => {
+      // Broadcast clear canvas command to all connected clients except sender
+      socket.broadcast.emit('clearCanvas');
+    });
+
+    // Handle toggle eraser event
+    socket.on('toggleEraser', (erasing) => {
+      // Broadcast eraser state to all connected clients except sender
+      socket.broadcast.emit('toggleEraser', erasing);
+    });
+
+    // Handle update brush settings event
+    socket.on('updateBrushSettings', (settings) => {
+      // Broadcast brush settings to all connected clients except sender
+      socket.broadcast.emit('updateBrushSettings', settings);
     });
   });
 };
