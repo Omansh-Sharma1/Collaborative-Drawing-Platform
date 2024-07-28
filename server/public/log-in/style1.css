@@ -37,17 +37,39 @@ form input[type="text"] {
     border-radius: 4px;
 }
 
-form button {
-    background-color: #007bff;
+#roomActions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#roomActions input[type="text"] {
+    width: 300px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+}
+
+#roomActions button {
+    width: 140px;
+    padding: 10px;
+    background-color: #28a745;
     color: #fff;
     border: none;
-    padding: 10px 20px;
     border-radius: 4px;
     cursor: pointer;
-    width: 100%;
     transition: background-color 0.3s ease;
 }
 
-form button:hover {
-    background-color: #0056b3;
+#roomActions button:hover {
+    background-color: #218838;
 }

@@ -3,41 +3,52 @@ const { v4: uuidv4 } = require('uuid');
 
 const initializeSocket = (server) => {
   const io = new Server(server);
+  const activeRooms = new Set();
 
   io.on('connection', (socket) => {
-    const sessionId = uuidv4(); // Generate unique session ID
+    console.log(`User connected: ${socket.id}`);
 
-    // Send session ID to the client
-    socket.emit('sessionId', sessionId);
-    console.log(`User connected with session ID: ${sessionId}`);
+    socket.on('createRoom', () => {
+      const roomId = uuidv4();
+      activeRooms.add(roomId);
+      socket.join(roomId);
+      socket.emit('roomCreated', roomId);
+      console.log(`Room created with ID: ${roomId}`);
+    });
 
-    // Handle user disconnection
+    socket.on('joinRoom', ({ roomId }) => {
+      if (activeRooms.has(roomId)) {
+        socket.join(roomId);
+        socket.emit('roomJoined', roomId);
+        console.log(`User joined room with ID: ${roomId}`);
+      } else {
+        socket.emit('roomNotFound', roomId);
+        console.log(`Room with ID: ${roomId} not found`);
+      }
+    });
+
     socket.on('disconnect', () => {
-      console.log(`User with session ID ${sessionId} disconnected`);
+      console.log(`User disconnected: ${socket.id}`);
     });
 
     // Handle drawing event
     socket.on('drawing', (data) => {
-      // Broadcast drawing data to all connected clients except sender
-      socket.broadcast.emit('drawing', data);
+      io.to(data.roomId).emit('drawing', data); // Broadcast to all clients in the room, including the sender
     });
 
     // Handle clear canvas event
-    socket.on('clearCanvas', () => {
-      // Broadcast clear canvas command to all connected clients except sender
-      socket.broadcast.emit('clearCanvas');
+    socket.on('clearCanvas', (roomId) => {
+      io.to(roomId).emit('clearCanvas'); // Broadcast to all clients in the room, including the sender
     });
 
     // Handle toggle eraser event
-    socket.on('toggleEraser', (erasing) => {
-      // Broadcast eraser state to all connected clients except sender
-      socket.broadcast.emit('toggleEraser', erasing);
+    socket.on('toggleEraser', ({ roomId, erasing }) => {
+      io.to(roomId).emit('toggleEraser', erasing); // Broadcast to all clients in the room, including the sender
     });
 
     // Handle update brush settings event
-    socket.on('updateBrushSettings', (settings) => {
-      // Broadcast brush settings to all connected clients except sender
-      socket.broadcast.emit('updateBrushSettings', settings);
+    socket.on('updateBrushSettings', ({ roomId, settings }) => {
+      io.to(roomId).emit('updateBrushSettings', settings); // Broadcast to all clients in the room, including the sender
     });
   });
 };

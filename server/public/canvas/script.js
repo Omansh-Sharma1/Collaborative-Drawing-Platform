@@ -9,10 +9,13 @@ window.onload = function() {
     const brushStyleSelect = document.getElementById('brushStyle');
     const clearButton = document.getElementById('clearButton');
     const eraserButton = document.getElementById('eraserButton');
+
     let painting = false;
     let erasing = false;
     let history = [];
     let currentPath = [];
+    const urlParams = new URLSearchParams(window.location.search);
+    const roomId = urlParams.get('roomId');
 
     canvas.width = canvas.clientWidth;
     canvas.height = canvas.clientHeight;
@@ -21,8 +24,15 @@ window.onload = function() {
 
     socket.on('connect', () => {
         console.log('Connected to server socket');
-        socket.on('sessionId', (sessionId) => {
-            console.log('Received session ID:', sessionId);
+
+        if (roomId) {
+            socket.emit('joinRoom', { roomId });
+            console.log(`Joined room: ${roomId}`);
+        }
+
+        socket.on('roomNotFound', (roomId) => {
+            alert(`Room with ID: ${roomId} not found`);
+            window.location.href = '/';
         });
 
         socket.on('drawing', (data) => {
@@ -86,7 +96,8 @@ window.onload = function() {
                 globalAlpha: opacityInput.value,
                 globalCompositeOperation: ctx.globalCompositeOperation,
                 brushStyle: brushStyleSelect.value,
-                path: currentPath
+                path: currentPath,
+                roomId: roomId
             });
         }
     }
@@ -144,7 +155,6 @@ window.onload = function() {
             ctx.moveTo(pos.x, pos.y);
         }
 
-
         function sprayPaint(pos) {
             const density = 50;
             ctx.fillStyle = colorInput.value;
@@ -192,13 +202,13 @@ window.onload = function() {
     function toggleEraser() {
         erasing = !erasing;
         eraserButton.textContent = erasing ? 'Drawing' : 'Eraser';
-        socket.emit('toggleEraser', erasing);
+        socket.emit('toggleEraser', { roomId: roomId, erasing });
     }
 
     function clearCanvas() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         history = [];
-        socket.emit('clearCanvas');
+        socket.emit('clearCanvas', roomId);
     }
 
     function updateBrushSettings() {
@@ -209,7 +219,7 @@ window.onload = function() {
             penStyle: penStyleSelect.value,
             brushStyle: brushStyleSelect.value
         };
-        socket.emit('updateBrushSettings', settings);
+        socket.emit('updateBrushSettings', { roomId, settings });
     }
 
     canvas.addEventListener('mousedown', startPosition);
@@ -227,7 +237,7 @@ window.onload = function() {
     clearButton.addEventListener('click', function() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         history = [];
-        socket.emit('clearCanvas');
+        socket.emit('clearCanvas', roomId);
     });
 
     function drawPen(path) {
@@ -253,7 +263,6 @@ window.onload = function() {
         ctx.stroke();
         ctx.beginPath();
     }
-    
 
     function drawSpray(path, lineWidth) {
         ctx.fillStyle = ctx.strokeStyle;

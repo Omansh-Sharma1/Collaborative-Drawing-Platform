@@ -15,8 +15,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 initializeSocket(server);
 
+// Define routes
 app.use('/', require('./routes/index'));
 app.use('/api/users', require('./routes/userRoutes'));
+
+// Explicitly serve canvas.html
+app.get('/canvas.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'canvas' , 'canvas.html'));
+});
 
 // Start server
 server.listen(port, () => {

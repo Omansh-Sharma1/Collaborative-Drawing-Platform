@@ -5,18 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Collaborative Drawing Platform - Session Form</title>
     <link rel="stylesheet" href="/log-in/style1.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script defer src="/log-in/login-script.js"></script>
 </head>
 <body>
     <h1>Welcome to the Collaborative Drawing Platform</h1>
     <br>
-    <div>    
-        <form id="sessionForm" action="/login" method="POST">
+    <div>
+        <form id="sessionForm">
             <label for="userName">Enter User Name:</label>
-            <input type="text" id="userName" name="userName">
-            <button type="submit">Start Session</button>
+            <input type="text" id="userName" name="userName" required>
         </form>
     </div>
-    
-    <script src="/log-in/login-script.js"></script>
-   </body>
-   </html>
+    <div id="roomActions">
+        To Join a room, Enter the Room ID below.
+        <input type="text" id="roomIdInput" placeholder="Enter Room ID">
+        <div class="button-group">
+            <button id="createRoomBtn">Create Room</button>
+            <button id="joinRoomBtn">Join Room</button>
+        </div>
+    </div>
+</body>
+</html>
